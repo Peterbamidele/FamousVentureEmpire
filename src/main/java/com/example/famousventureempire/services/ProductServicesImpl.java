@@ -21,7 +21,7 @@ public class ProductServicesImpl implements ProductServices {
     ProductRepository productRepository;
 
     @Override
-    public void deleteProductsById(String productsId) throws ProductException {
+    public void deleteProductsById(Integer productsId) throws ProductException {
         Products products=productRepository.findById(productsId).orElse(null);
         if(products==null){
            throw new ProductException("Product does not exist");
@@ -33,35 +33,28 @@ public class ProductServicesImpl implements ProductServices {
     @Override
     public void addProduct(ProductsDto productsDto) throws ProductException {
        Products products = new Products();
-
+        log.info("two here");
        if(productRepository.findProductsByName(productsDto.getName()).isPresent()){
            throw new ProductException("Product already exists");
        }
        ModelMapper modelMapper= new ModelMapper();
        modelMapper.map(productsDto,products);
        log.info("After Mapping the product");
-//        products.setName(productsDto.getName());
-//        products.setCategory(productsDto.getCategory());
-//        products.setPrice(productsDto.getPrice());
-//        products.setImage(productsDto.getImage());
-//        products.setDescription(productsDto.getDescription());
-
-
         productRepository.save(products);
     }
 
     @Override
-    public Optional<ProductsDto> findProductById(String productsId) throws ProductException {
+    public Optional<ProductsDto> findProductById(Integer productsId) throws ProductException {
         Optional<Products> products=productRepository.findById(productsId);
         if(products.isEmpty()){
             throw new ProductException("Product Not Found");
         }
-        ModelMapper modelMapper= new ModelMapper();
-        Optional<ProductsDto> productsDto =Optional.empty();
-        modelMapper.map(products,productsDto);
-        log.info("After Mapping the productDto");
-        //todo mapProducts To dto
-        return productsDto;
+        if(products.isPresent()){
+
+            ModelMapper modelMapper= new ModelMapper();
+            modelMapper.map(products,productsDto);
+        }
+        return null;
     }
 
     @Override

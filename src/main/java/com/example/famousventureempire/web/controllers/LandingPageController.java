@@ -3,14 +3,15 @@ package com.example.famousventureempire.web.controllers;
 import com.example.famousventureempire.data.model.ProductsDto;
 import com.example.famousventureempire.services.ProductServices;
 import com.example.famousventureempire.web.exceptions.ProductException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
-@Controller
+@Slf4j
+@RestController
 @RequestMapping("")
 public class LandingPageController {
     @Autowired
@@ -22,14 +23,18 @@ public class LandingPageController {
 
     @PostMapping("/addProduct")
     public void addProduct(@RequestBody ProductsDto productsDto){
-       try{ productServices.addProduct(productsDto);}
+       try{
+           log.info("One here");
+           productServices.addProduct(productsDto);
+
+       }
        catch (ProductException productException){
            System.err.println(productException.getMessage());
        }
     }
 
     @DeleteMapping("/deleteProduct/{id}")
-    public void addProduct(@PathVariable ("id")String productId){
+    public void addProduct(@PathVariable ("id")Integer productId){
         try{ productServices.deleteProductsById(productId);
         }
         catch (ProductException productException){
@@ -37,14 +42,17 @@ public class LandingPageController {
         }
     }
     @GetMapping("/findAProduct/{id}")
-    public Optional<ProductsDto> findAProductById(@PathVariable ("id") String id){
-        Optional<ProductsDto>productsDto= Optional.empty();
-      try{
-          productsDto=productServices.findProductById(id);
+    public Optional<ProductsDto> findAProductById(@PathVariable("id") Integer id){
+        Optional<ProductsDto> productsDto=Optional.empty();
+        try{
+            log.info("the is is -->{}",id);
+            log.info("The product found is-->{}",productServices.findProductById(id));
+//         productsDto=productServices.findProductById(id);
+
       }  catch (ProductException productException){
           System.err.println(productException.getMessage());
       }
-      return productsDto;
+        return productsDto;
 
     }
     @GetMapping("/findAProductByNameContaining/{id}")
