@@ -12,8 +12,8 @@ import java.util.Optional;
 @Service
 public interface ProductServices {
 
-    void deleteProductsById(String productsId) throws ProductException;
+    void deleteProductsById(Integer productsId) throws ProductException;
     void addProduct(ProductsDto productsDto) throws ProductException;
-    Optional<ProductsDto>findProductById(String productsId) throws ProductException;
+    Optional<ProductsDto>findProductById(Integer productsId) throws ProductException;
     List<ProductsDto> findProductsByNameContaining(String Name) throws ProductException;
 }

@@ -26,16 +26,16 @@ public class Cart {
 
     private BigDecimal cartTotal;
 
-    public void addProductToCart(Products product, int quantity){
-        String productId = product.getId();
-        CartItem cartItem = new CartItem();
-        cartItem.setProduct(product);
-        if(cartItemCollection.containsKey(productId)){
-            cartItemCollection.get(productId).increaseCartItemQuantity(quantity);
-        }
-        cartItemCollection.put(productId, cartItem);
-        cartTotal = calculateCartTotal();
-    }
+//    public void addProductToCart(Products product, int quantity){
+//        String productId = product.getId();
+//        CartItem cartItem = new CartItem();
+//        cartItem.setProduct(product);
+//        if(cartItemCollection.containsKey(productId)){
+//            cartItemCollection.get(productId).increaseCartItemQuantity(quantity);
+//        }
+//        cartItemCollection.put(productId, cartItem);
+//        cartTotal = calculateCartTotal();
+//    }
 
     private BigDecimal calculateCartTotal() {
         BigDecimal cartItemTotal = BigDecimal.ZERO;

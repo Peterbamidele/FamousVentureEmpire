@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Products,String> {
+public interface ProductRepository extends JpaRepository<Products,Integer> {
     Optional<Products> findProductsByName(String name);
     List<Products> findProductsByNameContaining(String name);
 

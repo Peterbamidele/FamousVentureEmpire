@@ -11,11 +11,11 @@ public class Products {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Integer id;
     @Column
     private String name;
     @Column
-    private String Description;
+    private String description;
     @Column
     private BigDecimal price;
     @Column
