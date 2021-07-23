@@ -7,21 +7,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add A Product</title>
     <!-- Favicon-->
-    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css}"  rel="stylesheet"/>
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css}"  rel="stylesheet" />
     <!-- Google Fonts -->
-    <link th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap}" rel="stylesheet"/>
+    <link th:href="@{https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap}" rel="stylesheet" />
     <!-- MDB -->
-    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css}" rel="stylesheet"/>
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css}" rel="stylesheet" />
+    <link th:href="@{assets/css/styles.css}" rel="stylesheet" />
 </head>
 
 <body>
-
-        <!-- Navigation   -->
-
-    <!-- Navigation end   -->
-
-
-<!--     &lt;!&ndash;Form&ndash;&gt;-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="#!">Famous Venture Empire</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
      <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
         <h2>Add a product</h2>
          <div  th:if="${error}" role="alert">
@@ -30,105 +39,45 @@
          <div class="row mb-3">
              <div class="col">
                  <div class="form-outline">
-                              <span  class="ui-icon-alert" th:if="${#fields.hasErrors('name')}" th:error="*{name}"></span>
-                              <input type="text" th:field="*{name}" name="text" id="form6Example1" class="form-control" placeholder="Product Name">
-                              <label class="form-label" for="form6Example1">Product Name</label>
+                     <span  class="ui-icon-alert" th:if="${#fields.hasErrors('name')}" th:error="*{name}"></span>
+                     <input type="text" th:field="*{name}" name="text" id="form6Example1" class="form-control" placeholder="Product Name">
+                     <label class="form-label" for="form6Example1">Product Name</label>
                  </div>
              </div>
              <div class="col">
                  <div class="form-outline">
                      <span class="ui-icon-alert" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-                     <input type="text" th:field="*{description}" id="form6Example2" class="form-control" placeholder="Product Name">
-                     <label class="form-label" for="form6Example2">Last name</label>
+                     <input type="text" th:field="*{description}" id="form6Example2" class="form-control" placeholder="Product Description">
+                     <label class="form-label" for="form6Example2">Product Description</label>
                  </div>
              </div>
          </div>
          <div class="row mb-3">
-         <div class="form-outline mb-3">
-             <input type="text" id="form6Example3" class="form-control" />
-             <label class="form-label" for="form6Example3">Company name</label>
+             <div class="col">
+                 <div class="form-outline">
+                     <span  class="ui-icon-alert" th:if="${#fields.hasErrors('category')}" th:error="*{category}"></span>
+                     <input type="text" th:field="*{category}" name="text" id="form6Example3" class="form-control" placeholder="Product Category"/>
+                     <label class="form-label" for="form6Example1">Product Category</label>
+                 </div>
+             </div>
+             <div class="col">
+                 <div class="form-outline">
+                     <span class="ui-icon-alert" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                     <input type="number" th:field="*{price}" id="form6Example4" class="form-control" placeholder="Product Price">
+                     <label class="form-label" for="form6Example2">Product Price</label>
+                 </div>
+             </div>
          </div>
-
-         <!-- Text input -->
-         <div class="form-outline mb-3">
-             <input type="text" id="form6Example4" class="form-control" />
-             <label class="form-label" for="form6Example4">Address</label>
+         <div class="row mb-3">
+         <div class="col">
+             <label for="formFile" class="form-label">Upload Product Image</label>
+             <input class="form-control" th:field="*{image}" type="file" id="formFile">
          </div>
          </div>
-
-
-<!--         <span  class="ui-icon-alert" th:if="${#fields.hasErrors('Price')}" th:error="*{price}"></span>-->
-<!--         <input type="text" th:field="*{name}"name="text" id="price" placeholder="Price">-->
-<!--         <label for="text"></label>-->
-         <span  class="ui-icon-alert" th:if="${#fields.hasErrors('category')}" th:error="*{category}"></span>
-         <input type="text" th:field="*{name}"name="text" id="category" placeholder="Category">
          <button type="submit" class="btn btn-success btn-block mb-2">Upload A Product</button>
     </form>
 
-        <form>
-            <!-- 2 column grid layout with text inputs for the first and last names -->
-<!--            <div class="row mb-3">-->
-<!--                <div class="col">-->
-<!--                    <div class="form-outline">-->
-<!--                        <input type="text" id="form6Example1" class="form-control" />-->
-<!--                        <label class="form-label" for="form6Example1">First name</label>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col">-->
-<!--                    <div class="form-outline">-->
-<!--                        <input type="text" id="form6Example2" class="form-control" />-->
-<!--                        <label class="form-label" for="form6Example2">Last name</label>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-            <!-- Text input -->
-<!--            <div class="form-outline mb-3">-->
-<!--                <input type="text" id="form6Example3" class="form-control" />-->
-<!--                <label class="form-label" for="form6Example3">Company name</label>-->
-<!--            </div>-->
-
-<!--            &lt;!&ndash; Text input &ndash;&gt;-->
-<!--            <div class="form-outline mb-3">-->
-<!--                <input type="text" id="form6Example4" class="form-control" />-->
-<!--                <label class="form-label" for="form6Example4">Address</label>-->
-<!--            </div>-->
-
-            <!-- Email input -->
-            <div class="form-outline mb-3">
-                <input type="email" id="form6Example5" class="form-control" />
-                <label class="form-label" for="form6Example5">Email</label>
-            </div>
-
-            <!-- Number input -->
-            <div class="form-outline mb-3">
-                <input type="number" id="form6Example6" class="form-control" />
-                <label class="form-label" for="form6Example6">Phone</label>
-            </div>
-
-            <!-- Message input -->
-            <div class="form-outline mb-3">
-                <textarea class="form-control" id="form6Example7" rows="4"></textarea>
-                <label class="form-label" for="form6Example7">Additional information</label>
-            </div>
-
-            <!-- Checkbox -->
-            <div class="form-check d-flex justify-content-center mb-4">
-                <input class="form-check-input me-2" type="checkbox" value="" id="form6Example8" checked/>
-                <label class="form-check-label" for="form6Example8"> Create an account? </label>
-            </div>
-
-            <!-- Submit button -->
-
-
-        </form>
-
-    <!-- Navigation   -->
-    
-
-    <!-- Scripts -->
         <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js}"></script>
-
         <script src="../static/asset/scripts/app.js"></script>
 </body>
 

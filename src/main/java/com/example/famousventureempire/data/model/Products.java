@@ -1,6 +1,7 @@
 package com.example.famousventureempire.data.model;
 
 import lombok.Data;
+import lombok.NonNull;
 
 
 import javax.persistence.*;
