@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,7 @@ public class ProductServicesImpl implements ProductServices {
        }
         if(productsDto.getImage()!=null && !productsDto.getImage().isEmpty()){
             Map<Object,Object> params=new HashMap<>();
-            params.put("public_id","blogapp/"+extractFileName(productsDto.getImage().getName()));
+            params.put("public_id","Famous/"+extractFileName(productsDto.getImage().getName()));
             params.put("overwrite",true);
             log.info("Image parameters-->{}",params);
             try{
