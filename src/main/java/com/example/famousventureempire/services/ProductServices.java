@@ -14,6 +14,6 @@ public interface ProductServices {
 
     void deleteProductsById(Integer productsId) throws ProductException;
     void addProduct(ProductsDto productsDto) throws ProductException;
-    Optional<ProductsDto>findProductById(Integer productsId) throws ProductException;
+    ProductsDto findProductById(Integer productsId) throws ProductException;
     List<ProductsDto> findProductsByNameContaining(String Name) throws ProductException;
 }
