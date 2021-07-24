@@ -1,7 +1,7 @@
 package com.example.famousventureempire.services;
 
-import com.example.famousventureempire.data.model.Products;
-import com.example.famousventureempire.data.model.ProductsDto;
+import com.example.famousventureempire.data.model.Product;
+import com.example.famousventureempire.data.model.ProductDto;
 import com.example.famousventureempire.data.repository.ProductRepository;
 import com.example.famousventureempire.services.cloud.CloudStorageService;
 import com.example.famousventureempire.web.exceptions.ProductException;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,8 +25,8 @@ public class ProductServicesImpl implements ProductServices {
 
     @Override
     public void deleteProductsById(Integer productsId) throws ProductException {
-        Products products=productRepository.findById(productsId).orElse(null);
-        if(products==null){
+        Product product =productRepository.findById(productsId).orElse(null);
+        if(product ==null){
            throw new ProductException("Product does not exist");
         }
         productRepository.deleteById(productsId);
@@ -38,58 +37,58 @@ public class ProductServicesImpl implements ProductServices {
     }
 
     @Override
-    public void addProduct(ProductsDto productsDto) throws ProductException {
-       Products products = new Products();
-        if (productsDto==null){
+    public void addProduct(ProductDto productDto) throws ProductException {
+       Product product = new Product();
+        if (productDto ==null){
             throw new ProductException("Post cannot be null");
         }
-       if(productRepository.findProductsByName(productsDto.getName()).isPresent()){
+       if(productRepository.findProductsByName(productDto.getName()).isPresent()){
            throw new ProductException("Product already exists");
        }
-        if(productsDto.getImage()!=null && !productsDto.getImage().isEmpty()){
+        if(productDto.getImage()!=null && !productDto.getImage().isEmpty()){
             Map<Object,Object> params=new HashMap<>();
-            params.put("public_id","Famous/"+extractFileName(productsDto.getImage().getName()));
+            params.put("public_id","Famous/"+extractFileName(productDto.getImage().getName()));
             params.put("overwrite",true);
             log.info("Image parameters-->{}",params);
             try{
-                Map<?,?> uploadResult = cloudStorageService.uploadImage(productsDto.getImage(),params);
-                products.setImage(String.valueOf(uploadResult.get("url")));
+                Map<?,?> uploadResult = cloudStorageService.uploadImage(productDto.getImage(),params);
+                product.setImage(String.valueOf(uploadResult.get("url")));
             }catch (IOException e){
                 e.printStackTrace();
             }
 
         }
-        products.setDescription(productsDto.getDescription());
-        products.setPrice(productsDto.getPrice());
-        products.setCategory(productsDto.getCategory());
-        products.setName(productsDto.getName());
-        productRepository.save(products);
+        product.setDescription(productDto.getDescription());
+        product.setPrice(productDto.getPrice());
+        product.setCategory(productDto.getCategory());
+        product.setName(productDto.getName());
+        productRepository.save(product);
     }
 
     @Override
-    public ProductsDto findProductById(Integer productsId) throws ProductException {
-        Optional<Products> products=productRepository.findById(productsId);
-        ProductsDto productsDto=new ProductsDto();
+    public ProductDto findProductById(Integer productsId) throws ProductException {
+        Optional<Product> products=productRepository.findById(productsId);
+        ProductDto productDto =new ProductDto();
         ModelMapper modelMapper= new ModelMapper();
         if(products.isEmpty()){
             throw new ProductException("Product Not Found");
         }
-            modelMapper.map(products.get(),productsDto);
-            return productsDto;
+            modelMapper.map(products.get(), productDto);
+            return productDto;
     }
 
     @Override
-    public List<ProductsDto> findProductsByNameContaining(String Name) throws ProductException {
-        List<Products> products=productRepository.findProductsByNameContaining(Name);
+    public List<ProductDto> findProductsByNameContaining(String Name) throws ProductException {
+        List<Product> products=productRepository.findProductsByNameContaining(Name);
         if(products.isEmpty()){
             throw new ProductException("Product Not Found");
         }
         log.info("List of products containing the name are-->{}",products);
         ModelMapper modelMapper= new ModelMapper();
-        List<ProductsDto>productsDto=products
-                .stream().map(product ->modelMapper.map(product,ProductsDto.class)).collect(Collectors.toList());
-        log.info("List of productsDto containing the name are-->{}",productsDto);
+        List<ProductDto> productDto =products
+                .stream().map(product ->modelMapper.map(product, ProductDto.class)).collect(Collectors.toList());
+        log.info("List of productsDto containing the name are-->{}", productDto);
         //todo mapProducts To dto
-        return productsDto;
+        return productDto;
     }
 }

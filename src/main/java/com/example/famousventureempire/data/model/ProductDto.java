@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.Column;
 import java.math.BigDecimal;
 @Data
-public class ProductsDto {
+public class ProductDto {
 
     private String name;
     private String description;

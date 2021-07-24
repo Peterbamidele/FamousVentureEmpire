@@ -18,7 +18,7 @@ public class CartItem {
     private String id;
 
     @OneToOne
-    private Products product;
+    private Product product;
     private int quantity = 1;
     private BigDecimal total;
 
