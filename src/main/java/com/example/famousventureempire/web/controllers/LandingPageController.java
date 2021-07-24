@@ -1,6 +1,6 @@
 package com.example.famousventureempire.web.controllers;
 
-import com.example.famousventureempire.data.model.ProductsDto;
+import com.example.famousventureempire.data.model.ProductDto;
 import com.example.famousventureempire.services.ProductServices;
 import com.example.famousventureempire.web.exceptions.ProductException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 @Slf4j
 //@RestController
 @RequestMapping("")
@@ -29,23 +29,23 @@ public class LandingPageController {
 
     @GetMapping("/create")
     public String getPostForm(Model model){
-        model.addAttribute("productDto", new ProductsDto());
+        model.addAttribute("productDto", new ProductDto());
         return "create";
     }
     @PostMapping("/addProduct")
-    public String addProduct(@ModelAttribute @Valid ProductsDto productsDto, BindingResult result, Model model){
-        log.info("Post dto received-->{}",productsDto);
+    public String addProduct(@ModelAttribute @Valid ProductDto productDto, BindingResult result, Model model){
+        log.info("Post dto received-->{}", productDto);
         if(result.hasErrors()){
             return "create";
         }
         try{
-            productServices.addProduct(productsDto);
+            productServices.addProduct(productDto);
         } catch (ProductException e) {
             log.info("Exception occurred -->{}",e.getMessage());
         }catch(DataIntegrityViolationException dx){
             model.addAttribute("error",dx.getMessage());
             model.addAttribute("errorMessage",dx.getMessage());
-            model.addAttribute("productsDto",productsDto);
+            model.addAttribute("productsDto", productDto);
             return "create";
         }
         return "redirect:/";
@@ -61,27 +61,27 @@ public class LandingPageController {
         }
     }
     @GetMapping("/findAProduct/{id}")
-    public ProductsDto findAProductById(@PathVariable("id") Integer id){
-     ProductsDto productsDto= new ProductsDto();
+    public ProductDto findAProductById(@PathVariable("id") Integer id){
+     ProductDto productDto = new ProductDto();
         try{
-          productsDto=productServices.findProductById(id);
+          productDto =productServices.findProductById(id);
 
 
       }  catch (ProductException productException){
           System.err.println(productException.getMessage());
       }
-        return productsDto;
+        return productDto;
 
     }
     @GetMapping("/findAProductByNameContaining/{id}")
-    public List<ProductsDto> findAProductByNameContaining(@PathVariable("id") String id){
-        List<ProductsDto>productsDto=new ArrayList<>();
+    public List<ProductDto> findAProductByNameContaining(@PathVariable("id") String id){
+        List<ProductDto> productDto =new ArrayList<>();
         try{
-            productsDto=productServices.findProductsByNameContaining(id);
+            productDto =productServices.findProductsByNameContaining(id);
         }  catch (ProductException productException){
             System.err.println(productException.getMessage());
         }
-        return productsDto;
+        return productDto;
     }
 
 

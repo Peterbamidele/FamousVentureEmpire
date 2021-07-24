@@ -1,9 +1,9 @@
 package com.example.famousventureempire.services;
 
-import com.example.famousventureempire.data.model.Products;
+import com.example.famousventureempire.data.model.Product;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface CartServices {
-    void addProductToCart(Products product, int quantity);
+    void addProductToCart(Product product, int quantity);
 }
