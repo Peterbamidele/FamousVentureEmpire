@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-//@RestController
 @RequestMapping("")
 @Controller
 public class LandingPageController {
