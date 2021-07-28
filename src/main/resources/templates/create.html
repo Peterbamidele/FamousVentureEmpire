@@ -31,7 +31,7 @@
             </div>
         </div>
     </nav>
-     <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
+     <form th:action="@{/create}" method="post" th:object="${productDto}" enctype="multipart/form-data">
         <h2>Add a product</h2>
          <div  th:if="${error}" role="alert">
              <span th:text="${errorMessage}"></span>
@@ -40,14 +40,14 @@
              <div class="col">
                  <div class="form-outline">
                      <span  class="ui-icon-alert" th:if="${#fields.hasErrors('name')}" th:error="*{name}"></span>
-                     <input type="text" th:field="*{name}" name="text" id="form6Example1" class="form-control" placeholder="Product Name">
+                     <input type="text" th:field="*{name}" name="text" id="form6Example1" class="form-control" placeholder="Product Name" required>
                      <label class="form-label" for="form6Example1">Product Name</label>
                  </div>
              </div>
              <div class="col">
                  <div class="form-outline">
                      <span class="ui-icon-alert" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-                     <input type="text" th:field="*{description}" id="form6Example2" class="form-control" placeholder="Product Description">
+                     <input type="text" th:field="*{description}" id="form6Example2" class="form-control" placeholder="Product Description" required>
                      <label class="form-label" for="form6Example2">Product Description</label>
                  </div>
              </div>
@@ -56,14 +56,14 @@
              <div class="col">
                  <div class="form-outline">
                      <span  class="ui-icon-alert" th:if="${#fields.hasErrors('category')}" th:error="*{category}"></span>
-                     <input type="text" th:field="*{category}" name="text" id="form6Example3" class="form-control" placeholder="Product Category"/>
+                     <input type="text" th:field="*{category}" name="text" id="form6Example3" class="form-control" placeholder="Product Category" required>
                      <label class="form-label" for="form6Example1">Product Category</label>
                  </div>
              </div>
              <div class="col">
                  <div class="form-outline">
                      <span class="ui-icon-alert" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-                     <input type="number" th:field="*{price}" id="form6Example4" class="form-control" placeholder="Product Price">
+                     <input type="number" th:field="*{price}" id="form6Example4" class="form-control" placeholder="Product Price" required>
                      <label class="form-label" for="form6Example2">Product Price</label>
                  </div>
              </div>
@@ -71,7 +71,7 @@
          <div class="row mb-3">
          <div class="col">
              <label for="formFile" class="form-label">Upload Product Image</label>
-             <input class="form-control" th:field="*{image}" type="file" id="formFile">
+             <input class="form-control" th:field="*{image}" type="file" id="formFile" required>
          </div>
          </div>
          <button type="submit" class="btn btn-success btn-block mb-2">Upload A Product</button>
