@@ -26,19 +26,14 @@ public class LandingPageController {
         return "index";
     }
 
-    @GetMapping("/create")
-    public String getPostForm(Model model){
+    @RequestMapping(value = "/create",method = {RequestMethod.GET,RequestMethod.POST})
+    public String getPostForm(Model model,@ModelAttribute @Valid ProductDto productDto) {
         model.addAttribute("productDto", new ProductDto());
-        return "create";
-    }
-    @PostMapping("/addProduct")
-    public String addProduct(@ModelAttribute @Valid ProductDto productDto, BindingResult result, Model model){
         log.info("Post dto received-->{}", productDto);
-        if(result.hasErrors()){
-            return "create";
-        }
+
         try{
             productServices.addProduct(productDto);
+            log.info("Post dto after save-->{}", productDto);
         } catch (ProductException e) {
             log.info("Exception occurred -->{}",e.getMessage());
         }catch(DataIntegrityViolationException dx){
@@ -47,8 +42,26 @@ public class LandingPageController {
             model.addAttribute("productsDto", productDto);
             return "create";
         }
-        return "redirect:/";
+        return "create";
     }
+//    @PostMapping("/addProduct")
+//    public String addProduct(@ModelAttribute @Valid ProductDto productDto, BindingResult result, Model model){
+//        log.info("Post dto received-->{}", productDto);
+//        if(result.hasErrors()){
+//            return "create";
+//        }
+//        try{
+//            productServices.addProduct(productDto);
+//        } catch (ProductException e) {
+//            log.info("Exception occurred -->{}",e.getMessage());
+//        }catch(DataIntegrityViolationException dx){
+//            model.addAttribute("error",dx.getMessage());
+//            model.addAttribute("errorMessage",dx.getMessage());
+//            model.addAttribute("productsDto", productDto);
+//            return "create";
+//        }
+//        return "redirect:/";
+//    }
 
 
     @DeleteMapping("/deleteProduct/{id}")
