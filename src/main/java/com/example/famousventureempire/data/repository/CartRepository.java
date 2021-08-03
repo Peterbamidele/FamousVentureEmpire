@@ -1,11 +1,14 @@
 package com.example.famousventureempire.data.repository;
 
-import com.example.famousventureempire.data.model.CartItem;
+import com.example.famousventureempire.data.model.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface CartRepository extends JpaRepository<CartItem,String> {
+public interface CartRepository extends JpaRepository<Cart,String> {
+
+    void deleteAllByCartId(String id);
 
 }

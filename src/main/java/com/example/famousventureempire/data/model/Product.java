@@ -23,6 +23,9 @@ public class Product {
     private String image;
     @Column
     private String category;
+    @Column
+    private Integer productQuantity;
+
 
 
 }

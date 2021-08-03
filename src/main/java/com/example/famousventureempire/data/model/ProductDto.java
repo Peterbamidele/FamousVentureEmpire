@@ -14,5 +14,6 @@ public class ProductDto {
     private BigDecimal price;
     private MultipartFile image;
     private String category;
+    private Integer productQuantity;
 
 }
