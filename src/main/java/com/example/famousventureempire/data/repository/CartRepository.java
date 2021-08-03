@@ -9,6 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface CartRepository extends JpaRepository<Cart,String> {
 
-    void deleteAllByCartId(String id);
+
 
 }
