@@ -32,6 +32,10 @@ public class LandingPageController {
         model.addAttribute("productDto", new ProductDto());
         return "create";
     }
+    @GetMapping("/product")
+    public String productPage(){
+        return "Product";
+    }
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute @Valid ProductDto productDto, BindingResult result, Model model){
         log.info("Post dto received-->{}", productDto);
