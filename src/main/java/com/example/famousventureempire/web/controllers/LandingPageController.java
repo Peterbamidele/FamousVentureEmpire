@@ -38,8 +38,10 @@ public class LandingPageController {
 
         return "create";
     }
-    @GetMapping("/product")
-    public String productPage(){
+    @GetMapping("/product/{id}")
+    public String productPage(Model model,@PathVariable("id") String id) throws ProductException {
+        List<ProductDto> productDtoList= productServices.findProductsByDescription(id);
+        model.addAttribute("productList",productDtoList);
         return "Product";
     }
     @PostMapping("/addProduct")

@@ -91,4 +91,19 @@ public class ProductServicesImpl implements ProductServices {
         //todo mapProducts To dto
         return productDto;
     }
+
+    @Override
+    public List<ProductDto> findProductsByDescription(String name) throws ProductException {
+        List<Product> products=productRepository.findProductsByDescription(name);
+        if(products.isEmpty()){
+            throw new ProductException("Product Not Found");
+        }
+        log.info("List of products containing the name are-->{}",products);
+        ModelMapper modelMapper= new ModelMapper();
+        List<ProductDto> productDto =products
+                .stream().map(product ->modelMapper.map(product, ProductDto.class)).collect(Collectors.toList());
+        log.info("List of productsDto containing the name are-->{}", productDto);
+        //todo mapProducts To dto
+        return productDto;
+    }
 }
