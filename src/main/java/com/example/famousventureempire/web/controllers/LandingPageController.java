@@ -1,6 +1,9 @@
 package com.example.famousventureempire.web.controllers;
 
+import com.example.famousventureempire.data.model.Cart;
+import com.example.famousventureempire.data.model.Product;
 import com.example.famousventureempire.data.model.ProductDto;
+import com.example.famousventureempire.services.CartServices;
 import com.example.famousventureempire.services.ProductServices;
 import com.example.famousventureempire.web.exceptions.ProductException;
 import lombok.extern.slf4j.Slf4j;
@@ -16,20 +19,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-//@RestController
 @RequestMapping("")
 @Controller
 public class LandingPageController {
     @Autowired
     ProductServices productServices;
+    @Autowired
+    CartServices cartServices;
+    Product product= new Product();
     @GetMapping("")
     public String landingPage(){
         return "index";
     }
 
-    @GetMapping("/create")
-    public String getPostForm(Model model){
+    @RequestMapping(value = "/create",method = {RequestMethod.GET,RequestMethod.POST})
+    public String getPostForm(Model model,@ModelAttribute @Valid ProductDto productDto) {
         model.addAttribute("productDto", new ProductDto());
+
         return "create";
     }
     @GetMapping("/product")
@@ -38,12 +44,12 @@ public class LandingPageController {
     }
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute @Valid ProductDto productDto, BindingResult result, Model model){
+
         log.info("Post dto received-->{}", productDto);
-        if(result.hasErrors()){
-            return "create";
-        }
+
         try{
             productServices.addProduct(productDto);
+            log.info("Post dto after save-->{}", productDto);
         } catch (ProductException e) {
             log.info("Exception occurred -->{}",e.getMessage());
         }catch(DataIntegrityViolationException dx){
@@ -52,10 +58,21 @@ public class LandingPageController {
             model.addAttribute("productsDto", productDto);
             return "create";
         }
+        return "create";
+    }
+    @PostMapping("/addProductToCart")
+    public String addProduct(@ModelAttribute @Valid ProductDto productDto,String id){
+        product.setDescription(productDto.getDescription());
+        product.setPrice(productDto.getPrice());
+        product.setCategory(productDto.getCategory());
+        product.setName(productDto.getName());
+        cartServices.addProductsToCart(id,product,productDto.getProductQuantity());
         return "redirect:/";
     }
-
-
+    @GetMapping("/Checkout")
+    public List<Cart> checkOut(String id){
+      return cartServices.checkoutCart(id);
+    }
     @DeleteMapping("/deleteProduct/{id}")
     public void addProduct(@PathVariable ("id")Integer productId){
         try{ productServices.deleteProductsById(productId);
