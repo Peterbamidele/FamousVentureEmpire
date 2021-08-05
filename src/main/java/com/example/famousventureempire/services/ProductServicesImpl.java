@@ -46,9 +46,10 @@ public class ProductServicesImpl implements ProductServices {
            throw new ProductException("Product already exists");
        }
         if(productDto.getImage()!=null && !productDto.getImage().isEmpty()){
+            log.info("the image name is -->{}",productDto.getImage().getName());
             Map<Object,Object> params=new HashMap<>();
-            params.put("public_id","Famous/"+extractFileName(productDto.getImage().getName()));
-            params.put("overwrite",true);
+            params.put("public_id","Famous/"+productDto.getImage().getName()+productDto.getName());
+//            params.put("overwrite",true);
             log.info("Image parameters-->{}",params);
             try{
                 Map<?,?> uploadResult = cloudStorageService.uploadImage(productDto.getImage(),params);
