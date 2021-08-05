@@ -33,16 +33,18 @@ public class LandingPageController {
     }
 
     @RequestMapping(value = "/create",method = {RequestMethod.GET,RequestMethod.POST})
-    public String getPostForm(Model model,@ModelAttribute @Valid ProductDto productDto) {
+    public String getPostForm(Model model,@ModelAttribute @Valid ProductDto productDto) throws ProductException {
+        log.info("The post recieved is -->{}",productDto);
+        productServices.addProduct(productDto);
         model.addAttribute("productDto", new ProductDto());
-
         return "create";
     }
-    @GetMapping("/product/{id}")
-    public String productPage(Model model,@PathVariable("id") String id) throws ProductException {
-        List<ProductDto> productDtoList= productServices.findProductsByDescription(id);
+    @GetMapping("/product")
+    public String productPage(Model model,String id) throws ProductException {
+        id="oriamo";
+        List<Product> productDtoList= productServices.findProductsByDescription(id);
         model.addAttribute("productList",productDtoList);
-        return "Product";
+        return "product";
     }
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute @Valid ProductDto productDto, BindingResult result, Model model){
