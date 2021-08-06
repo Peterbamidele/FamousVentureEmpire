@@ -26,8 +26,8 @@ class CartRepositoryTest {
 
     @Test
     void findFromTheRepository(){
-        cart.setCartId("123");
+        cart.setUserNumber("123");
         cartRepository.save(cart);
-        cartRepository.findById("123");
+        cartRepository.findAllByUserNumber("123");
     }
 }

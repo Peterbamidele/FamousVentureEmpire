@@ -19,9 +19,11 @@ import java.util.List;
 @NoArgsConstructor
 
 public class Cart {
-
     @Id
-    private String cartId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    private String userNumber;
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
