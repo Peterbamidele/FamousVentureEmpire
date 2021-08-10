@@ -28,20 +28,22 @@ public class LandingPageController {
     CartServices cartServices;
     Product product= new Product();
     @GetMapping("")
-    public String landingPage(){
+    public String landingPage(Model model,@ModelAttribute ProductDto productDto){
+        model.addAttribute("productDto",productDto);
         return "index";
     }
 
     @RequestMapping(value = "/create",method = {RequestMethod.GET,RequestMethod.POST})
     public String getPostForm(Model model,@ModelAttribute @Valid ProductDto productDto) throws ProductException {
-        log.info("The post recieved is -->{}",productDto);
+        log.info("The post received is -->{}",productDto);
         productServices.addProduct(productDto);
         model.addAttribute("productDto", new ProductDto());
         return "create";
     }
-    @GetMapping("/product")
-    public String productPage(Model model,String id) throws ProductException {
-        id="oriamo";
+    @RequestMapping(value = "/product",method = {RequestMethod.GET,RequestMethod.POST})
+    public String productPage(Model model,@ModelAttribute  ProductDto productDto) throws ProductException {
+        log.info("The post received is -->{}",productDto);
+        String id = productDto.getDescription();
         List<Product> productDtoList= productServices.findProductsByDescription(id);
         model.addAttribute("productList",productDtoList);
         return "product";

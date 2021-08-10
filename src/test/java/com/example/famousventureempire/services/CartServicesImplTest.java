@@ -61,7 +61,11 @@ class CartServicesImplTest {
 
     @Test
     void checkoutCart() {
-       List<Cart> cartList= cartServices.checkoutCart("1234");
+        product.setDescription("bag");
+        product.setCategory("bags");
+        cartServices.addProductsToCart("1",product,2);
+
+        List<Cart> cartList= cartServices.checkoutCart("1");
         log.info("The saved cart was -->{}",cartList);
     }
 }
