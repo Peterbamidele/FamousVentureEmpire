@@ -31,7 +31,7 @@
             </div>
         </div>
     </nav>
-     <form th:action="@{/create}" method="post" th:object="${productDto}" enctype="multipart/form-data">
+     <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
         <h2>Add a product</h2>
          <div  th:if="${error}" role="alert">
              <span th:text="${errorMessage}"></span>
