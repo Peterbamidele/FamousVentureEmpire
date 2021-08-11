@@ -33,10 +33,9 @@ public class LandingPageController {
         return "index";
     }
 
-    @RequestMapping(value = "/create",method = {RequestMethod.GET,RequestMethod.POST})
+
+    @GetMapping("/create")
     public String getPostForm(Model model,@ModelAttribute @Valid ProductDto productDto) throws ProductException {
-        log.info("The post received is -->{}",productDto);
-        productServices.addProduct(productDto);
         model.addAttribute("productDto", new ProductDto());
         return "create";
     }
