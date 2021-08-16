@@ -15,5 +15,6 @@ public class ProductDto {
     private MultipartFile image;
     private String category;
     private Integer productQuantity;
+    private String phoneNumber;
 
 }

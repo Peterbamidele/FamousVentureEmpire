@@ -45,6 +45,7 @@ public class LandingPageController {
         String id = productDto.getDescription();
         List<Product> productDtoList= productServices.findProductsByDescription(id);
         model.addAttribute("productList",productDtoList);
+        model.addAttribute("productDto",productDto);
         return "product";
     }
     @PostMapping("/addProduct")
@@ -65,14 +66,19 @@ public class LandingPageController {
         }
         return "create";
     }
-    @PostMapping("/addProductToCart")
-    public String addProduct(@ModelAttribute @Valid ProductDto productDto,String id){
-        product.setDescription(productDto.getDescription());
-        product.setPrice(productDto.getPrice());
-        product.setCategory(productDto.getCategory());
-        product.setName(productDto.getName());
-        cartServices.addProductsToCart(id,product,productDto.getProductQuantity());
+    @PostMapping("/addProductToCart/{id}")
+    public String addProduct(@ModelAttribute @Valid ProductDto productDto,@PathVariable("id")Integer id,Model model) throws ProductException {
+          Integer quantity=productDto.getProductQuantity();
+          String phoneNumber = productDto.getPhoneNumber();
+          productDto = productServices.findProductById(id);
+          product.setDescription(productDto.getDescription());
+          product.setPrice(productDto.getPrice());
+          product.setCategory(productDto.getCategory());
+          product.setName(productDto.getName());
+          log.info("The Dto Added To cart is -->{}",productDto);
+          cartServices.addProductsToCart(phoneNumber, product, quantity);
         return "redirect:/";
+
     }
     @GetMapping("/Checkout")
     public List<Cart> checkOut(String id){
