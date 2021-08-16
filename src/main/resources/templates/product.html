@@ -33,6 +33,16 @@
               <!-- Product name-->
               <h5 class="fw-bolder"> <a href="#" class="post-title" th:text="${product.price}"></a></h5>
               <h5 class="fw-bolder"> <a href="#" class="post-title" th:text="${product.description}"></a></h5>
+              <form th:action="@{/addProductToCart/{id}(id=${product.getId()})}" method="post" th:object="${productDto}" enctype="multipart/form-data">
+                <div class="text-center">
+                  <div class="form-check">
+                  </div>
+                  <button class="btn btn-outline-dark mt-auto">
+                    <input type="text" th:field="*{phoneNumber}" name="text" id="form6Example3" class="form-control" placeholder="PhoneNumber" required>
+                    <input type="text" th:field="*{productQuantity}" name="text" id="form6Example2" class="form-control" placeholder="Quantity" required>
+                    ADD TO CART</button></div>
+              </form>
+
               <!-- Product price-->
             </div>
           </div>

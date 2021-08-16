@@ -35,6 +35,7 @@ public class CartServicesImpl implements CartServices{
             cart.setUserNumber(phoneNumber);
             product.setProductQuantity(quantity);
             cart.setProductList(Collections.singletonList(product));
+            log.info("The to cart saved to the repository is-->{}",cart);
             cartRepository.save(cart);
         }
     }
