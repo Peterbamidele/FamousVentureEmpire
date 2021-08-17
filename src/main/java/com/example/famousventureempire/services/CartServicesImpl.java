@@ -50,4 +50,9 @@ public class CartServicesImpl implements CartServices{
 
     }
 
+    @Override
+    public Cart findCartsByUserNumber(String number) {
+        return cartRepository.findCartsByUserNumber(number);
+    }
+
 }

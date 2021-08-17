@@ -115,6 +115,12 @@ public class LandingPageController {
         }
         return productDto;
     }
+    @GetMapping("/findCart/{id}")
+    public Cart findCartByUserNumber(@PathVariable ("id")String id){
+        Cart cart=cartServices.findCartsByUserNumber(id);
+        log.info("The Cart found is -->{}",cart);
+        return cart;
 
+    }
 
 }
