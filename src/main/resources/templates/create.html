@@ -16,21 +16,9 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="#!">Famous Venture Empire</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<nav th:insert="fragments.html :: topnav"></nav>
+<!-- Header-->
+
      <form th:action="@{/addProduct}" method="post" th:object="${productDto}" enctype="multipart/form-data">
         <h2>Add a product</h2>
          <div  th:if="${error}" role="alert">
@@ -76,7 +64,7 @@
          </div>
          <button type="submit" class="btn btn-success btn-block mb-2">Upload A Product</button>
     </form>
-
+<footer th:insert="fragments.html :: footer"></footer>
         <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js}"></script>
         <script src="../static/asset/scripts/app.js"></script>
 </body>

@@ -54,6 +54,7 @@ public class ProductServicesImpl implements ProductServices {
             try{
                 Map<?,?> uploadResult = cloudStorageService.uploadImage(productDto.getImage(),params);
                 product.setImage(String.valueOf(uploadResult.get("url")));
+                productDto.setImageReturned(product.getImage());
             }catch (IOException e){
                 e.printStackTrace();
             }
@@ -75,6 +76,7 @@ public class ProductServicesImpl implements ProductServices {
             throw new ProductException("Product Not Found");
         }
             modelMapper.map(products.get(), productDto);
+            productDto.setImageReturned(products.get().getImage());
             return productDto;
     }
 

@@ -32,7 +32,11 @@ public class LandingPageController {
         model.addAttribute("productDto",productDto);
         return "index";
     }
-
+    @GetMapping("/frags")
+    public String frags(Model model,@ModelAttribute ProductDto productDto){
+        model.addAttribute("productDto",productDto);
+        return "fragments";
+    }
 
     @GetMapping("/create")
     public String getPostForm(Model model,@ModelAttribute @Valid ProductDto productDto) throws ProductException {
@@ -75,6 +79,7 @@ public class LandingPageController {
           product.setPrice(productDto.getPrice());
           product.setCategory(productDto.getCategory());
           product.setName(productDto.getName());
+          product.setImage(productDto.getImageReturned());
           log.info("The Dto Added To cart is -->{}",productDto);
           cartServices.addProductsToCart(phoneNumber, product, quantity);
         return "redirect:/";
@@ -115,12 +120,15 @@ public class LandingPageController {
         }
         return productDto;
     }
-    @GetMapping("/findCart/{id}")
-    public Cart findCartByUserNumber(@PathVariable ("id")String id){
-        Cart cart=cartServices.findCartsByUserNumber(id);
-        log.info("The Cart found is -->{}",cart);
-        return cart;
+    @GetMapping("/findCart")
+    public String findCartByUserNumber(Model model,@ModelAttribute @Valid ProductDto productDto){
+        log.info("The phonenumber found is -->{}",productDto.getPhoneNumber());
+        Cart cart=cartServices.findCartsByUserNumber(productDto.getPhoneNumber());
 
+        log.info("The products found is -->{}",cart.getProductList());
+        model.addAttribute("productList",cart.getProductList());
+
+        return "cart";
     }
 
 }

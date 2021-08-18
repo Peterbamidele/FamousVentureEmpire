@@ -25,7 +25,11 @@ public class Product {
     private String category;
     @Column
     private Integer productQuantity;
+    @Column
+    private BigDecimal grandTotal;
 
-
-
+    public BigDecimal getGrandTotal(BigDecimal price,Integer productQuantity) {
+        this.grandTotal = price.multiply(BigDecimal.valueOf(productQuantity));
+        return grandTotal;
+    }
 }
