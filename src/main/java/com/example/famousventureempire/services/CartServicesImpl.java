@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class CartServicesImpl implements CartServices{
         if(foundCart==null){
             cart.setUserNumber(phoneNumber);
             product.setProductQuantity(quantity);
+            product.setGrandTotal(product.getPrice().multiply(BigDecimal.valueOf(product.getProductQuantity())));
             cart.setProductList(Collections.singletonList(product));
             log.info("The to cart saved to the repository is-->{}",cart);
             cartRepository.save(cart);

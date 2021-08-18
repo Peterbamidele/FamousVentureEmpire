@@ -13,6 +13,7 @@ public class ProductDto {
     private String description;
     private BigDecimal price;
     private MultipartFile image;
+    private String imageReturned;
     private String category;
     private Integer productQuantity;
     private String phoneNumber;
