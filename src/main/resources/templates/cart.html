@@ -17,7 +17,13 @@
 <body>
 
 <nav th:insert="fragments.html :: topnav"></nav>
-
+<form th:action="@{/findCart}" method="get" th:object="${productDto}" enctype="multipart/form-data">
+    <button class="btn btn-outline-dark" type="submit">
+        <input type="text" th:field="*{phoneNumber}" name="text" id="form6Example3" class="form-control" placeholder="PhoneNumber" required>
+        <i class="bi-cart-fill me-1"></i>
+        Checkout
+    </button>
+</form>
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -35,7 +41,12 @@
                             <h5 class="fw-bolder">Product description: <a href="#" class="post-title" th:text="${product.description}"></a></h5>
                             <h5 class="fw-bolder">Product quantity: <a href="#" class="post-title" th:text="${product.productQuantity}"></a></h5>
                             <h5 class="fw-bolder">Total Price: <a href="#" class="post-title" th:text="${product.grandTotal}"></a></h5>
+                            <button class="btn btn-outline-dark" type="submit">
+                                <input type="text" th:field="*{phoneNumber}" name="text" id="form6Example3" class="form-control" placeholder="PhoneNumber" required>
+                                <i class="bi-cart-fill me-1"></i>
 
+                              Remove From Cart
+                            </button>
                             <!-- Product price-->
                         </div>
                     </div>
