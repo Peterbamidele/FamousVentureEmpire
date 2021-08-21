@@ -7,14 +7,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
+
+
 @Slf4j
 @Service
 public class CartServicesImpl implements CartServices{
-
+    @PersistenceContext
+    EntityManager entityManager;
     @Autowired
     CartRepository cartRepository;
 
@@ -25,11 +30,11 @@ public class CartServicesImpl implements CartServices{
         Cart foundCart=cartRepository.findCartsByUserNumber(phoneNumber);
         log.info("The to cart found is-->{}",foundCart);
         if(foundCart!=null){
+            product.setProductQuantity(quantity);
             List<Product>productList=foundCart.getProductList();
             productList.add(product);
-            product.setProductQuantity(quantity);
             foundCart.setProductList(productList);
-            cartRepository.deleteById(foundCart.getId());
+            log.info("The to cart found is-->{}",foundCart);
             cartRepository.save(foundCart);
         }
         if(foundCart==null){
@@ -38,6 +43,7 @@ public class CartServicesImpl implements CartServices{
             product.setGrandTotal(product.getPrice().multiply(BigDecimal.valueOf(product.getProductQuantity())));
             cart.setProductList(Collections.singletonList(product));
             log.info("The to cart saved to the repository is-->{}",cart);
+
             cartRepository.save(cart);
         }
     }
@@ -55,6 +61,11 @@ public class CartServicesImpl implements CartServices{
     @Override
     public Cart findCartsByUserNumber(String number) {
         return cartRepository.findCartsByUserNumber(number);
+    }
+
+    @Override
+    public void saveCart(Cart cart) {
+        cartRepository.save(cart);
     }
 
 }

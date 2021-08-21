@@ -89,6 +89,19 @@ public class LandingPageController {
     public List<Cart> checkOut(String id){
       return cartServices.checkoutCart(id);
     }
+    @PostMapping("/removeFromCart/{id}")
+    public String removeFromCart(Model model, @ModelAttribute @Valid ProductDto productDto,@PathVariable("id") String id){
+
+        Cart cart=cartServices.findCartsByUserNumber(id);
+        log.info("The product found is -->{}",  cart.getProductList());
+        log.info("The product found id -->{}",  productDto.getId());
+        cart.getProductList().removeIf(product1 -> product1.getId().equals(productDto.getId()));
+        cart.setProductList(cart.getProductList());
+        log.info("The product found is -->{}",cart.getProductList());
+        cartServices.saveCart(cart);
+
+        return "redirect:/";
+    }
     @DeleteMapping("/deleteProduct/{id}")
     public void addProduct(@PathVariable ("id")Integer productId){
         try{ productServices.deleteProductsById(productId);
@@ -127,6 +140,8 @@ public class LandingPageController {
 
         log.info("The products found is -->{}",cart.getProductList());
         model.addAttribute("productList",cart.getProductList());
+        model.addAttribute("phoneNumber",productDto.getPhoneNumber());
+        model.addAttribute("productDto",productDto);
 
         return "cart";
     }
