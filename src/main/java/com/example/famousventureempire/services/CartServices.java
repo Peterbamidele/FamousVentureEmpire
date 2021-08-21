@@ -12,4 +12,5 @@ public interface CartServices {
     void addProductsToCart(String phoneNumber, Product product, Integer quantity);
     List<Cart> checkoutCart(String phoneNumber);
     Cart findCartsByUserNumber(String number);
+    void saveCart(Cart cart);
 }
