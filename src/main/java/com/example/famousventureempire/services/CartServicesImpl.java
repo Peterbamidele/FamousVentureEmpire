@@ -6,17 +6,19 @@ import com.example.famousventureempire.data.repository.CartRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.NoSuchElementException;
 
 
 @Slf4j
 @Service
+@Transactional
 public class CartServicesImpl implements CartServices{
     @PersistenceContext
     EntityManager entityManager;
@@ -30,12 +32,13 @@ public class CartServicesImpl implements CartServices{
         Cart foundCart=cartRepository.findCartsByUserNumber(phoneNumber);
         log.info("The to cart found is-->{}",foundCart);
         if(foundCart!=null){
+            cart.setUserNumber(phoneNumber);
             product.setProductQuantity(quantity);
-            List<Product>productList=foundCart.getProductList();
-            productList.add(product);
-            foundCart.setProductList(productList);
-            log.info("The to cart found is-->{}",foundCart);
-            cartRepository.save(foundCart);
+            product.setGrandTotal(product.getPrice().multiply(BigDecimal.valueOf(product.getProductQuantity())));
+            foundCart.getProductList().add(product);
+            cart.setProductList(foundCart.getProductList());
+            cartRepository.save(cart);
+
         }
         if(foundCart==null){
             cart.setUserNumber(phoneNumber);
@@ -43,7 +46,6 @@ public class CartServicesImpl implements CartServices{
             product.setGrandTotal(product.getPrice().multiply(BigDecimal.valueOf(product.getProductQuantity())));
             cart.setProductList(Collections.singletonList(product));
             log.info("The to cart saved to the repository is-->{}",cart);
-
             cartRepository.save(cart);
         }
     }
@@ -60,7 +62,12 @@ public class CartServicesImpl implements CartServices{
 
     @Override
     public Cart findCartsByUserNumber(String number) {
-        return cartRepository.findCartsByUserNumber(number);
+        List<Cart>cartList=cartRepository.findAllByUserNumber(number);
+        log.info("final cart -->{}",cartList);
+        Integer id = cartList
+                .stream()
+                .mapToInt(Cart::getId).min().orElseThrow(NoSuchElementException::new);
+        return cartRepository.findById(id).get();
     }
 
     @Override

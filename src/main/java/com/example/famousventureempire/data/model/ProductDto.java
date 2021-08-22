@@ -18,5 +18,14 @@ public class ProductDto {
     private String category;
     private Integer productQuantity;
     private String phoneNumber;
+    private String oriamo="Oriamo";
+    private String Lavelier="Lavelier";
+    private String hp="Hp";
+    private String powerBank="Power Bank";
+    private String carwireless="Car wireless";
+    private String smartwatch ="smartwatch";
+    private String  xtreme =" xtreme";
+    private String JBLWireless ="JBLWireless";
+
 
 }

@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
 public interface CartRepository extends JpaRepository<Cart,Integer> {
     void  deleteByUserNumber(String id);
     Cart findCartsByUserNumber(String number);
