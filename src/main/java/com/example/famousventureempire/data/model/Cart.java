@@ -17,18 +17,18 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
 
     private String userNumber;
+
     @OneToMany(
-            cascade = CascadeType.ALL,
+            cascade =CascadeType.PERSIST,
             fetch = FetchType.EAGER
     )
-    private List<Product> productList=new ArrayList<>();
+    private List<Product> productList;
 
 
 

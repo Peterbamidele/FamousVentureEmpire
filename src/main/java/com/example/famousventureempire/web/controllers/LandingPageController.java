@@ -27,8 +27,10 @@ public class LandingPageController {
     @Autowired
     CartServices cartServices;
     Product product= new Product();
+    List<Product> productDtoList=new ArrayList<>();
     @GetMapping("")
     public String landingPage(Model model,@ModelAttribute ProductDto productDto){
+
         model.addAttribute("productDto",productDto);
         return "index";
     }
@@ -44,13 +46,19 @@ public class LandingPageController {
         return "create";
     }
     @RequestMapping(value = "/product",method = {RequestMethod.GET,RequestMethod.POST})
-    public String productPage(Model model,@ModelAttribute  ProductDto productDto) throws ProductException {
-        log.info("The post received is -->{}",productDto);
-        String id = productDto.getDescription();
-        List<Product> productDtoList= productServices.findProductsByDescription(id);
+    public String productPage(Model model) throws ProductException {
         model.addAttribute("productList",productDtoList);
-        model.addAttribute("productDto",productDto);
+        model.addAttribute("productDto",new ProductDto());
         return "product";
+    }
+
+    @RequestMapping(value = "/product/{id}",method = {RequestMethod.GET,RequestMethod.POST})
+    public String productPage(Model model,@PathVariable String id) throws ProductException {
+        log.info("The id* received is -->{}",id);
+        productDtoList= productServices.findProductsByDescription(id);
+
+        model.addAttribute("productDto",new ProductDto());
+        return "redirect:/product";
     }
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute @Valid ProductDto productDto, BindingResult result, Model model){
