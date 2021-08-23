@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequestMapping("")
@@ -144,10 +146,15 @@ public class LandingPageController {
     @GetMapping("/findCart")
     public String findCartByUserNumber(Model model,@ModelAttribute @Valid ProductDto productDto){
         log.info("The phonenumber found is -->{}",productDto.getPhoneNumber());
-        Cart cart=cartServices.findCartsByUserNumber(productDto.getPhoneNumber());
-
-        log.info("The products found is -->{}",cart.getProductList());
-        model.addAttribute("productList",cart.getProductList());
+        List<Cart> cart=cartServices.findCartsAllByUserNumber(productDto.getPhoneNumber());
+        log.info("The cart b4 stream found is -->{}",cart);
+        List<Product> productList = cart                           // -> List<A>
+                        .stream()                       // -> Stream<A>
+                        .map(Cart::getProductList)             // -> Stream<List<String>>
+                        .flatMap(Collection::stream)    // -> Stream<String>
+                        .collect(Collectors.toList());
+        log.info("The products found is -->{}",productList);
+        model.addAttribute("productList",productList);
         model.addAttribute("phoneNumber",productDto.getPhoneNumber());
         model.addAttribute("productDto",productDto);
 
