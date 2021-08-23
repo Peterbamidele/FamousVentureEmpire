@@ -6,6 +6,8 @@ import lombok.NonNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
+
 @Data
 @Entity
 public class Product {
@@ -27,6 +29,7 @@ public class Product {
     private Integer productQuantity;
     @Column
     private BigDecimal grandTotal;
+
 
     public BigDecimal getGrandTotal(BigDecimal price,Integer productQuantity) {
         this.grandTotal = price.multiply(BigDecimal.valueOf(productQuantity));
