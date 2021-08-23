@@ -31,6 +31,7 @@ public class Product {
     private BigDecimal grandTotal;
 
 
+
     public BigDecimal getGrandTotal(BigDecimal price,Integer productQuantity) {
         this.grandTotal = price.multiply(BigDecimal.valueOf(productQuantity));
         return grandTotal;
