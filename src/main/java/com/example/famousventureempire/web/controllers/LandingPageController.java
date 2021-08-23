@@ -91,7 +91,7 @@ public class LandingPageController {
           product.setName(productDto.getName());
           product.setImage(productDto.getImageReturned());
           log.info("The Dto Added To cart is -->{}",productDto);
-          cartServices.addProductsToCart(phoneNumber, product, quantity);
+          cartServices.addProductsToCart(phoneNumber, product, quantity,new Cart());
         return "redirect:/";
 
     }
@@ -102,13 +102,13 @@ public class LandingPageController {
     @PostMapping("/removeFromCart/{id}")
     public String removeFromCart(Model model, @ModelAttribute @Valid ProductDto productDto,@PathVariable("id") String id){
 
-        Cart cart=cartServices.findCartsByUserNumber(id);
-        log.info("The product found is -->{}",  cart.getProductList());
-        log.info("The product found id -->{}",  productDto.getId());
-        cart.getProductList().removeIf(product1 -> product1.getId().equals(productDto.getId()));
-        cart.setProductList(cart.getProductList());
-        log.info("The product found is -->{}",cart.getProductList());
-        cartServices.saveCart(cart);
+//        Cart cart=cartServices.findCartsByUserNumber(id);
+//        log.info("The product found is -->{}",  cart.getProduct());
+//        log.info("The product found id -->{}",  productDto.getId());
+//        cart.getProductList().removeIf(product1 -> product1.getId().equals(productDto.getId()));
+//        cart.setProductList(cart.getProductList());
+//        log.info("The product found is -->{}",cart.getProductList());
+//        cartServices.saveCart(cart);
 
         return "redirect:/";
     }
@@ -150,8 +150,7 @@ public class LandingPageController {
         log.info("The cart b4 stream found is -->{}",cart);
         List<Product> productList = cart                           // -> List<A>
                         .stream()                       // -> Stream<A>
-                        .map(Cart::getProductList)             // -> Stream<List<String>>
-                        .flatMap(Collection::stream)    // -> Stream<String>
+                        .map(Cart::getProduct)             // -> Stream<List<String>// -> Stream<String>
                         .collect(Collectors.toList());
         log.info("The products found is -->{}",productList);
         model.addAttribute("productList",productList);

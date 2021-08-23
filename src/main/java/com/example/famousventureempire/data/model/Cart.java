@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 
 
 import javax.persistence.*;
@@ -22,13 +23,11 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
 
+    @Column
     private String userNumber;
 
-    @OneToMany(
-            cascade =CascadeType.PERSIST,
-            fetch = FetchType.EAGER
-    )
-    private List<Product> productList;
+    @OneToOne(cascade=CascadeType.ALL)
+    private Product product;
 
 
 

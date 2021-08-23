@@ -26,17 +26,19 @@ public class CartServicesImpl implements CartServices{
 
     @Autowired
     CartRepository cartRepository;
-    Cart foundCart;
-    Cart cart= new Cart();
+    @Autowired
+    EntityManager entityManager;
+
     @Override
-    public void addProductsToCart(String phoneNumber,Product product, Integer quantity) {
+    public void addProductsToCart(String phoneNumber,Product product, Integer quantity,Cart cart) {
             log.info("The to save number is -->{}",phoneNumber);
             cart.setUserNumber(phoneNumber);
             product.setProductQuantity(quantity);
             product.setGrandTotal(product.getPrice().multiply(BigDecimal.valueOf(product.getProductQuantity())));
-            cart.setProductList(Collections.singletonList(product));
+            cart.setProduct(product);
             log.info("The to cart saved to the repository is-->{}",cart);
-            cartRepository.save(cart);
+            cartRepository.saveAndFlush();
+
 
     }
 
@@ -44,7 +46,7 @@ public class CartServicesImpl implements CartServices{
     public List<Cart> checkoutCart(String id) {
         List<Cart>cartList=cartRepository.findAllByUserNumber(id);
         Cart optionalCart=cartRepository.findCartByUserNumber(id);
-        optionalCart.setProductList(null);
+        optionalCart.setProduct(null);
         cartRepository.save(optionalCart);
         return cartList;
 
