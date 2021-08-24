@@ -103,11 +103,17 @@ public class LandingPageController {
     public List<Cart> checkOut(String id){
       return cartServices.checkoutCart(id);
     }
-    @PostMapping("/removeFromCart/{id}")
-    public String removeFromCart(Model model, @ModelAttribute @Valid ProductDto productDto,@PathVariable("id") String id){
-
-//        Cart cart=cartServices.findCartsByUserNumber(id);
-//        log.info("The product found is -->{}",  cart.getProduct());
+//    @GetMapping("/removeFromCart/{description}/{price}/{productQuantity}")
+//    public String removeFromCart(Model model, @ModelAttribute @Valid ProductDto productDto, @PathVariable String description, @PathVariable BigDecimal price,@PathVariable Integer productQuantity){
+@GetMapping("/removeFromCart/{description}/{price}/{productQuantity}/{phoneNumbers}")
+public String removeFromCart(Model model, @ModelAttribute @Valid ProductDto productDto, @PathVariable String description, @PathVariable BigDecimal price,@PathVariable Integer productQuantity,@PathVariable String phoneNumbers){
+        log.info("The received are found is -->{},{},{},{}",description,price,productQuantity,phoneNumbers);
+        Product product= new Product();
+        product.setProductQuantity(productQuantity);
+        product.setDescription(description);
+        product.setPrice(price);
+        //Todo delete from cart impl
+        cartServices.deleteFromCart(product,phoneNumbers);
 //        log.info("The product found id -->{}",  productDto.getId());
 //        cart.getProductList().removeIf(product1 -> product1.getId().equals(productDto.getId()));
 //        cart.setProductList(cart.getProductList());
