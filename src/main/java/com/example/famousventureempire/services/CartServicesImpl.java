@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -71,6 +72,19 @@ public class CartServicesImpl implements CartServices{
         List<Product>productList=listMap.get(number);
         log.info("The BIG cart is-->{}",productList);
         return productList;
+    }
+
+    @Override
+    public void deleteFromCart(Product product,String phoneNumber) {
+        Product product2=listMap.get(phoneNumber).stream()
+                .filter(product1 -> product1.getDescription().equals(product.getDescription()))
+                .filter(product1 -> product1.getPrice().equals(product.getPrice()))
+                .filter(product1 -> product1.getProductQuantity().equals(product.getProductQuantity())).findFirst().orElse(null);
+        log.info("The product for delete is -->{}",product2);
+        List<Product>productList1=listMap.get(phoneNumber);
+        productList1.remove(product2);
+        listMap.put(phoneNumber,productList1);
+
     }
 
     @Override

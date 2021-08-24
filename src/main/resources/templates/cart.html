@@ -35,7 +35,13 @@
                     </ul>
                 </li>
             </ul>
-
+            <form th:action="@{/checkOut}" method="get" th:object="${productDto}" enctype="multipart/form-data">
+                <button class="btn btn-outline-dark" type="submit">
+                    <input type="text"  hidden th:field="*{phoneNumber}" name="text" id="form6Example3" class="form-control" placeholder="PhoneNumber" required>
+                    <i class="bi-cart-fill me-2"></i>
+                    CheckOut
+                </button>
+            </form>
         </div>
     </div>
 </nav>
@@ -45,7 +51,7 @@
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div class="col mb-5">
                 <div class="card h-100" th:each="product:${productList}">
-                    <form th:action="@{/removeFromCart/{id}(id=${phoneNumber})}" method="post" th:object="${productDto}" enctype="multipart/form-data">
+
                     <!-- Product image-->
 
                     <img class="card-img-top" th:src="${product.image}"  alt="..." />
@@ -59,16 +65,17 @@
                             <h5 class="fw-bolder">Product quantity: <a href="#" class="post-title" th:text="${product.productQuantity}"></a></h5>
                             <h5 class="fw-bolder">Total Price: <a href="#" class="post-title" th:text="${product.grandTotal}"></a></h5>
 
-                                <button class="btn btn-outline-dark" type="submit">
-                                    <input th:field="*{id}" class="form-check-input" type="checkbox" th:value="${product.id}" id="flexCheckChecked" checked="checked" required />
-                                    <i class="bi-cart-fill me-1"></i>
+
+                            <a th:href="@{/removeFromCart/{description}/{price}/{productQuantity}/{phoneNumbers} (description=${product.description},price=${product.price},productQuantity=${product.productQuantity},phoneNumbers=${phoneNumber})}">
+                                <button class="btn btn-outline-dark mt-auto">
                                     Remove From Cart
                                 </button>
+                            </a>
 <!--                            </form>-->
                             <!-- Product price-->
                         </div>
                     </div>
-                    </form>
+
 
                     <!-- Product actions-->
                     <!--          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">-->
