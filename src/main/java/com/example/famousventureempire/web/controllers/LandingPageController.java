@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -85,13 +86,16 @@ public class LandingPageController {
           Integer quantity=productDto.getProductQuantity();
           String phoneNumber = productDto.getPhoneNumber();
           productDto = productServices.findProductById(id);
+          Product product = new Product();
           product.setDescription(productDto.getDescription());
           product.setPrice(productDto.getPrice());
           product.setCategory(productDto.getCategory());
           product.setName(productDto.getName());
           product.setImage(productDto.getImageReturned());
-          log.info("The Dto Added To cart is -->{}",productDto);
-          cartServices.addProductsToCart(phoneNumber, product, quantity,new Cart());
+          product.setProductQuantity(quantity);
+          product.setGrandTotal(product.getPrice().multiply(BigDecimal.valueOf(product.getProductQuantity())));
+          log.info("The Dto Added To cart is -->{}",product);
+          cartServices.addProductsToCart(phoneNumber, product, quantity);
         return "redirect:/";
 
     }
@@ -146,12 +150,8 @@ public class LandingPageController {
     @GetMapping("/findCart")
     public String findCartByUserNumber(Model model,@ModelAttribute @Valid ProductDto productDto){
         log.info("The phonenumber found is -->{}",productDto.getPhoneNumber());
-        List<Cart> cart=cartServices.findCartsAllByUserNumber(productDto.getPhoneNumber());
-        log.info("The cart b4 stream found is -->{}",cart);
-        List<Product> productList = cart                           // -> List<A>
-                        .stream()                       // -> Stream<A>
-                        .map(Cart::getProduct)             // -> Stream<List<String>// -> Stream<String>
-                        .collect(Collectors.toList());
+        List<Product> productList=cartServices.findCartsAllByUserNumber(productDto.getPhoneNumber());
+        log.info("The cart b4 stream found is -->{}",productList);
         log.info("The products found is -->{}",productList);
         model.addAttribute("productList",productList);
         model.addAttribute("phoneNumber",productDto.getPhoneNumber());

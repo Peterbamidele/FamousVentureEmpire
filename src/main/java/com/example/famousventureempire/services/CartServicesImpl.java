@@ -13,10 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
+import java.util.*;
 
 
 @Slf4j
@@ -28,16 +25,33 @@ public class CartServicesImpl implements CartServices{
     CartRepository cartRepository;
     @Autowired
     EntityManager entityManager;
-
+    List<Product>productList=new Stack<>();
+    Map<String,List<Product>>listMap= new HashMap<>();
     @Override
-    public void addProductsToCart(String phoneNumber,Product product, Integer quantity,Cart cart) {
+    public void addProductsToCart(String phoneNumber,Product product, Integer quantity) {
             log.info("The to save number is -->{}",phoneNumber);
-            cart.setUserNumber(phoneNumber);
-            product.setProductQuantity(quantity);
-            product.setGrandTotal(product.getPrice().multiply(BigDecimal.valueOf(product.getProductQuantity())));
-            cart.setProduct(product);
-            log.info("The to cart saved to the repository is-->{}",cart);
-            cartRepository.saveAndFlush();
+
+            log.info("The product is -->{}",product);
+            log.info("The previous is -->{}",listMap.get(phoneNumber));
+            if(listMap.get(phoneNumber)!=null){
+                this.productList=listMap.get(phoneNumber);
+                this.productList.add(product);
+                log.info("The previous is now -->{}",this.productList);
+                listMap.put(phoneNumber,null);
+                listMap.put(phoneNumber,this.productList);
+
+
+                log.info("The to cart saved to the repository is-->{}",listMap.get(phoneNumber));
+            }
+            if(listMap.get(phoneNumber)==null){
+                List<Product>productList= new ArrayList<>();
+                product.setProductQuantity(quantity);
+                product.setGrandTotal(product.getPrice().multiply(BigDecimal.valueOf(product.getProductQuantity())));
+                productList.add(product);
+                listMap.put(phoneNumber,productList);
+                log.info("The to cart saved to the repository is-->{}",listMap.get(phoneNumber));
+            }
+
 
 
     }
@@ -53,10 +67,10 @@ public class CartServicesImpl implements CartServices{
     }
 
     @Override
-    public List<Cart> findCartsAllByUserNumber(String number) {
-        List<Cart>cartList=cartRepository.findAllByUserNumber(number);
-        log.info("The BIG cart is-->{}",cartList);
-        return cartList;
+    public List<Product> findCartsAllByUserNumber(String number) {
+        List<Product>productList=listMap.get(number);
+        log.info("The BIG cart is-->{}",productList);
+        return productList;
     }
 
     @Override

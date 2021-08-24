@@ -26,8 +26,8 @@ public class Cart {
     @Column
     private String userNumber;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    private Product product;
+    @OneToMany(cascade=CascadeType.ALL)
+    private List<Product> product;
 
 
 
