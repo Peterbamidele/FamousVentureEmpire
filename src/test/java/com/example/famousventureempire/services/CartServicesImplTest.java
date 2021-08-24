@@ -36,21 +36,21 @@ class CartServicesImplTest {
     void addProductsToCart() {
         product.setDescription("bag");
         product.setCategory("bags");
-        cartServices.addProductsToCart("1",product,2,new Cart());
+        cartServices.addProductsToCart("1",product,2);
 
-        cartServices.addProductsToCart("1",product,6,new Cart());
+        cartServices.addProductsToCart("1",product,6);
 
-        cartServices.addProductsToCart("1",product,26,new Cart());
-        cartServices.addProductsToCart("2",product,2,new Cart());
+        cartServices.addProductsToCart("1",product,26);
+        cartServices.addProductsToCart("2",product,2);
 
-        cartServices.addProductsToCart("2",product,6,new Cart());
+        cartServices.addProductsToCart("2",product,6);
 
-        cartServices.addProductsToCart("2",product,26,new Cart());
+        cartServices.addProductsToCart("2",product,26);
         List<Cart> cartList= cartServices.checkoutCart("1");
         log.info("The saved cart was -->{}",cartList);
-        cartServices.addProductsToCart("1",product,6,new Cart());
+        cartServices.addProductsToCart("1",product,6);
 
-        cartServices.addProductsToCart("1",product,26,new Cart());
+        cartServices.addProductsToCart("1",product,26);
         cartList= cartServices.checkoutCart("1");
         log.info("The saved cart was -->{}",cartList);
         cartList= cartServices.checkoutCart("2");
@@ -63,7 +63,7 @@ class CartServicesImplTest {
     void checkoutCart() {
         product.setDescription("bag");
         product.setCategory("bags");
-        cartServices.addProductsToCart("1",product,2,new Cart());
+        cartServices.addProductsToCart("1",product,2);
 
         List<Cart> cartList= cartServices.checkoutCart("1");
         log.info("The saved cart was -->{}",cartList);

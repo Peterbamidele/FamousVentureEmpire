@@ -9,9 +9,9 @@ import java.util.List;
 
 @Service
 public interface CartServices {
-   void addProductsToCart(String phoneNumber, Product product, Integer quantity,Cart cart);
+   void addProductsToCart(String phoneNumber, Product product, Integer quantity);
     List<Cart> checkoutCart(String phoneNumber);
-    List<Cart> findCartsAllByUserNumber(String number);
+    List<Product> findCartsAllByUserNumber(String number);
     Cart findCartsByUserNumber(String number);
     void saveCart(Cart cart);
 }
