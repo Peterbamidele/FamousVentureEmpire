@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface CartServices {
    void addProductsToCart(String phoneNumber, Product product, Integer quantity);
-    List<Cart> checkoutCart(String phoneNumber);
+    void checkoutCart(String phoneNumber);
     List<Product> findCartsAllByUserNumber(String number);
     void deleteFromCart(Product product,String phoneNumber);
     Cart findCartsByUserNumber(String number);

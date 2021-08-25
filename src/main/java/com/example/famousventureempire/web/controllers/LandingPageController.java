@@ -99,9 +99,11 @@ public class LandingPageController {
         return "redirect:/";
 
     }
-    @GetMapping("/Checkout")
-    public List<Cart> checkOut(String id){
-      return cartServices.checkoutCart(id);
+    @GetMapping("/Checkout/{phoneNumbers}")
+    public String checkOut(@PathVariable String phoneNumbers){
+        log.info("The number sent for checkout is -->{}",phoneNumbers);
+        cartServices.checkoutCart(phoneNumbers);
+      return "redirect:/";
     }
 //    @GetMapping("/removeFromCart/{description}/{price}/{productQuantity}")
 //    public String removeFromCart(Model model, @ModelAttribute @Valid ProductDto productDto, @PathVariable String description, @PathVariable BigDecimal price,@PathVariable Integer productQuantity){
@@ -114,11 +116,7 @@ public String removeFromCart(Model model, @ModelAttribute @Valid ProductDto prod
         product.setPrice(price);
         //Todo delete from cart impl
         cartServices.deleteFromCart(product,phoneNumbers);
-//        log.info("The product found id -->{}",  productDto.getId());
-//        cart.getProductList().removeIf(product1 -> product1.getId().equals(productDto.getId()));
-//        cart.setProductList(cart.getProductList());
-//        log.info("The product found is -->{}",cart.getProductList());
-//        cartServices.saveCart(cart);
+
 
         return "redirect:/";
     }
