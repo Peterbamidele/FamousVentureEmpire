@@ -35,13 +35,16 @@
                     </ul>
                 </li>
             </ul>
-            <form th:action="@{/checkOut}" method="get" th:object="${productDto}" enctype="multipart/form-data">
-                <button class="btn btn-outline-dark" type="submit">
-                    <input type="text"  hidden th:field="*{phoneNumber}" name="text" id="form6Example3" class="form-control" placeholder="PhoneNumber" required>
-                    <i class="bi-cart-fill me-2"></i>
-                    CheckOut
-                </button>
-            </form>
+
+                <a th:href="@{/Checkout/{phoneNumbers}  (phoneNumbers=${phoneNumber})}">
+                    <button class="btn btn-outline-dark" type="submit">
+
+                        <i class="bi-cart-fill me-2"></i>
+                        CheckOut
+                    </button>
+                </a>
+
+
         </div>
     </div>
 </nav>

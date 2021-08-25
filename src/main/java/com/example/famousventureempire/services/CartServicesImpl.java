@@ -3,6 +3,7 @@ package com.example.famousventureempire.services;
 import com.example.famousventureempire.data.model.Cart;
 import com.example.famousventureempire.data.model.Product;
 import com.example.famousventureempire.data.repository.CartRepository;
+import com.example.famousventureempire.services.EmailServices.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class CartServicesImpl implements CartServices{
     CartRepository cartRepository;
     @Autowired
     EntityManager entityManager;
+    @Autowired
+    EmailService emailService;
     List<Product>productList=new Stack<>();
     Map<String,List<Product>>listMap= new HashMap<>();
     @Override
@@ -58,12 +61,13 @@ public class CartServicesImpl implements CartServices{
     }
 
     @Override
-    public List<Cart> checkoutCart(String id) {
-        List<Cart>cartList=cartRepository.findAllByUserNumber(id);
-        Cart optionalCart=cartRepository.findCartByUserNumber(id);
-        optionalCart.setProduct(null);
-        cartRepository.save(optionalCart);
-        return cartList;
+    public void checkoutCart(String id) {
+       List<Product>productList=listMap.get(id);
+       if(productList!=null){
+           emailService.sendMail(productList,id);
+           listMap.put(id,null);
+       }
+
 
     }
 
