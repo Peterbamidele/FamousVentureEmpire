@@ -1,12 +1,9 @@
 package com.example.famousventureempire.data.model;
 
 import lombok.Data;
-import lombok.NonNull;
-
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @Entity

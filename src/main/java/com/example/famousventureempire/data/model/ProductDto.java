@@ -1,12 +1,10 @@
 package com.example.famousventureempire.data.model;
 
 import lombok.Data;
-import lombok.NonNull;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+
 @Data
 public class ProductDto {
     private Integer id;
