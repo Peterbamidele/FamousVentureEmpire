@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@Transactional
 public class CartServicesImpl implements CartServices{
 
     @Autowired
@@ -43,8 +42,6 @@ public class CartServicesImpl implements CartServices{
                 log.info("The previous is now -->{}",this.productList);
                 listMap.put(phoneNumber,null);
                 listMap.put(phoneNumber,this.productList);
-
-
                 log.info("The to cart saved to the repository is-->{}",listMap.get(phoneNumber));
             }
             if(listMap.get(phoneNumber)==null){
