@@ -5,17 +5,12 @@ import com.example.famousventureempire.data.model.Product;
 import com.example.famousventureempire.data.repository.CartRepository;
 import com.example.famousventureempire.services.EmailServices.EmailService;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Slf4j

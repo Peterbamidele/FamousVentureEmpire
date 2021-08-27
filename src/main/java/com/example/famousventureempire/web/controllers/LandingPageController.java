@@ -1,6 +1,5 @@
 package com.example.famousventureempire.web.controllers;
 
-import com.example.famousventureempire.data.model.Cart;
 import com.example.famousventureempire.data.model.Product;
 import com.example.famousventureempire.data.model.ProductDto;
 import com.example.famousventureempire.services.CartServices;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequestMapping("")
@@ -44,12 +41,12 @@ public class LandingPageController {
     }
 
     @GetMapping("/create")
-    public String getPostForm(Model model,@ModelAttribute @Valid ProductDto productDto) throws ProductException {
+    public String getPostForm(Model model,@ModelAttribute @Valid ProductDto productDto) {
         model.addAttribute("productDto", new ProductDto());
         return "create";
     }
     @RequestMapping(value = "/product",method = {RequestMethod.GET,RequestMethod.POST})
-    public String productPage(Model model) throws ProductException {
+    public String productPage(Model model) {
         model.addAttribute("productList",productDtoList);
         model.addAttribute("productDto",new ProductDto());
         return "product";
@@ -64,7 +61,7 @@ public class LandingPageController {
         return "redirect:/product";
     }
     @PostMapping("/addProduct")
-    public String addProduct(@ModelAttribute @Valid ProductDto productDto, BindingResult result, Model model){
+    public String addProduct(@ModelAttribute @Valid ProductDto productDto, Model model){
 
         log.info("Post dto received-->{}", productDto);
 
@@ -82,7 +79,7 @@ public class LandingPageController {
         return "create";
     }
     @PostMapping("/addProductToCart/{id}")
-    public String addProduct(@ModelAttribute @Valid ProductDto productDto,@PathVariable("id")Integer id,Model model) throws ProductException {
+    public String addProduct(@ModelAttribute @Valid ProductDto productDto,@PathVariable("id")Integer id) throws ProductException {
           Integer quantity=productDto.getProductQuantity();
           String phoneNumber = productDto.getPhoneNumber();
           productDto = productServices.findProductById(id);
@@ -105,17 +102,16 @@ public class LandingPageController {
         cartServices.checkoutCart(phoneNumbers);
       return "redirect:/";
     }
-//    @GetMapping("/removeFromCart/{description}/{price}/{productQuantity}")
-//    public String removeFromCart(Model model, @ModelAttribute @Valid ProductDto productDto, @PathVariable String description, @PathVariable BigDecimal price,@PathVariable Integer productQuantity){
-@GetMapping("/removeFromCart/{description}/{price}/{productQuantity}/{phoneNumbers}")
-public String removeFromCart(Model model, @ModelAttribute @Valid ProductDto productDto, @PathVariable String description, @PathVariable BigDecimal price,@PathVariable Integer productQuantity,@PathVariable String phoneNumbers){
-        log.info("The received are found is -->{},{},{},{}",description,price,productQuantity,phoneNumbers);
-        Product product= new Product();
+
+    @GetMapping("/removeFromCart/{description}/{price}/{productQuantity}/{phoneNumbers}")
+    public String removeFromCart(@ModelAttribute @Valid ProductDto productDto, @PathVariable String description, @PathVariable BigDecimal price, @PathVariable Integer productQuantity, @PathVariable String phoneNumbers) {
+        log.info("The received are found is -->{},{},{},{}", description, price, productQuantity, phoneNumbers);
+        Product product = new Product();
         product.setProductQuantity(productQuantity);
         product.setDescription(description);
         product.setPrice(price);
-        //Todo delete from cart impl
-        cartServices.deleteFromCart(product,phoneNumbers);
+
+        cartServices.deleteFromCart(product, phoneNumbers);
 
 
         return "redirect:/";

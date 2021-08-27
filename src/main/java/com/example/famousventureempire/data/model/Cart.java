@@ -1,16 +1,10 @@
 package com.example.famousventureempire.data.model;
 
-import com.example.famousventureempire.web.exceptions.CartException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.hibernate.annotations.Cascade;
-
 
 import javax.persistence.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
