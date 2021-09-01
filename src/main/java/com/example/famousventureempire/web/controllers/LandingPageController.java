@@ -7,10 +7,10 @@ import com.example.famousventureempire.services.ProductServices;
 import com.example.famousventureempire.web.exceptions.ProductException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -70,11 +70,6 @@ public class LandingPageController {
             log.info("Post dto after save-->{}", productDto);
         } catch (ProductException e) {
             log.info("Exception occurred -->{}",e.getMessage());
-        }catch(DataIntegrityViolationException dx){
-            model.addAttribute("error",dx.getMessage());
-            model.addAttribute("errorMessage",dx.getMessage());
-            model.addAttribute("productsDto", productDto);
-            return "create";
         }
         return "create";
     }
