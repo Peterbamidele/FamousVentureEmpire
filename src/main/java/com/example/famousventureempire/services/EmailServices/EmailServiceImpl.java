@@ -22,7 +22,7 @@ public class EmailServiceImpl implements EmailService{
     @Override
     public void sendMail(List<Product> productList,String PhoneNumber) {
         StringBuilder stringBuilder= new StringBuilder();
-        stringBuilder.append("The List Of Orders By Customer: ").append(PhoneNumber).append("is").append("\n");
+        stringBuilder.append("The List Of Orders By Customer: ").append(PhoneNumber).append(" is").append("\n");
         stringBuilder.append("Product Name").append(" ").append("Product Quantity").append(" ").append("Product Price").append(" ").append("Total").append("\n");
         for (Product product:productList) {
             stringBuilder.append(product.getName()).append(" ").append(product.getProductQuantity()).append(" ").append(product.getPrice()).append(" ").append(product.getGrandTotal()).append("\n");
