@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class LandingPageController {
 
     }
     @GetMapping("/Checkout/{phoneNumbers}")
-    public String checkOut(@PathVariable String phoneNumbers){
+    public String checkOut(@PathVariable String phoneNumbers) throws MessagingException {
         log.info("The number sent for checkout is -->{}",phoneNumbers);
         cartServices.checkoutCart(phoneNumbers);
       return "redirect:/";
