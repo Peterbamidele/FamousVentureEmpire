@@ -61,12 +61,11 @@ public class EmailServiceImpl implements EmailService{
       }
         String mailSubject = "Customer Order ";
         String sender = "e-commercewebsite@gmail.com";
-        String template = "User phone number: [[name]],<br>"
-                + " Kindly find Customer Order below"
+        String template = "User phone number: [[name]],\n"
+                + " Kindly find Customer Order below And reach out to them"
                 +  "[[Order]]"
-                + "And reach out to them"
-
-                + "Thank you."
+                + "\n\n"
+                + "Thank you.\n"
                 + " order notification"
                 + " FamousVentures";
 
