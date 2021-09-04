@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.*;
@@ -53,7 +54,7 @@ public class CartServicesImpl implements CartServices{
     }
 
     @Override
-    public void checkoutCart(String id) {
+    public void checkoutCart(String id) throws MessagingException {
        List<Product>productList=listMap.get(id);
        if(productList!=null){
            emailService.sendMail(productList,id);

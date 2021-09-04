@@ -23,8 +23,5 @@ public class FamousVentureEmpireApplication {
                 "api_key",cloudinaryConfig.getApikey(),"api_secret",cloudinaryConfig.getSecretKey()));
     }
 
-    @Bean
-    public JavaMailSenderImpl javaMailSender(){
-        return new JavaMailSenderImpl();
-    }
+
 }
