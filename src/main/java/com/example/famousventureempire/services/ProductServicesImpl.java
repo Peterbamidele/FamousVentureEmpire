@@ -22,6 +22,7 @@ public class ProductServicesImpl implements ProductServices {
 
     @Autowired
     CloudStorageService cloudStorageService;
+    ModelMapper modelMapper= new ModelMapper();
 
     @Override
     public void deleteProductsById(Integer productsId) throws ProductException {
@@ -71,7 +72,7 @@ public class ProductServicesImpl implements ProductServices {
     public ProductDto findProductById(Integer productsId) throws ProductException {
         Optional<Product> products=productRepository.findById(productsId);
         ProductDto productDto =new ProductDto();
-        ModelMapper modelMapper= new ModelMapper();
+
         if(products.isEmpty()){
             throw new ProductException("Product Not Found");
         }
