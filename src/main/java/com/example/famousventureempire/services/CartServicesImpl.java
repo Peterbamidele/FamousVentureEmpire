@@ -84,15 +84,5 @@ public class CartServicesImpl implements CartServices{
 
     }
 
-    @Override
-    public Cart findCartsByUserNumber(String number) {
-        return cartRepository.findCartByUserNumber(number);
-
-    }
-
-    @Override
-    public void saveCart(Cart cart) {
-        cartRepository.save(cart);
-    }
 
 }

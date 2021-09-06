@@ -14,5 +14,4 @@ public interface CartServices {
     List<Product> findCartsAllByUserNumber(String number);
     void deleteFromCart(Product product,String phoneNumber);
 
-    void saveCart(Cart cart);
 }
