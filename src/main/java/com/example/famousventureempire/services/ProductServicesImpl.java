@@ -50,7 +50,6 @@ public class ProductServicesImpl implements ProductServices {
             log.info("the image name is -->{}",productDto.getImage().getName());
             Map<Object,Object> params=new HashMap<>();
             params.put("public_id","Famous/"+productDto.getImage().getName()+productDto.getName());
-//            params.put("overwrite",true);
             log.info("Image parameters-->{}",params);
             try{
                 Map<?,?> uploadResult = cloudStorageService.uploadImage(productDto.getImage(),params);
@@ -72,7 +71,6 @@ public class ProductServicesImpl implements ProductServices {
     public ProductDto findProductById(Integer productsId) throws ProductException {
         Optional<Product> products=productRepository.findById(productsId);
         ProductDto productDto =new ProductDto();
-
         if(products.isEmpty()){
             throw new ProductException("Product Not Found");
         }
@@ -92,7 +90,6 @@ public class ProductServicesImpl implements ProductServices {
         List<ProductDto> productDto =products
                 .stream().map(product ->modelMapper.map(product, ProductDto.class)).collect(Collectors.toList());
         log.info("List of productsDto containing the name are-->{}", productDto);
-        //todo mapProducts To dto
         return productDto;
     }
 

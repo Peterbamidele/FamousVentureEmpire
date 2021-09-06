@@ -13,6 +13,5 @@ public interface CartServices {
     void checkoutCart(String phoneNumber) throws MessagingException;
     List<Product> findCartsAllByUserNumber(String number);
     void deleteFromCart(Product product,String phoneNumber);
-    Cart findCartsByUserNumber(String number);
-    void saveCart(Cart cart);
+
 }
