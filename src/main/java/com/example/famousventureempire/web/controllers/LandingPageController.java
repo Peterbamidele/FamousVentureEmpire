@@ -27,11 +27,10 @@ public class LandingPageController {
     ProductServices productServices;
     @Autowired
     CartServices cartServices;
-    Product product= new Product();
+
     List<Product> productDtoList=new ArrayList<>();
     @GetMapping("")
     public String landingPage(Model model,@ModelAttribute ProductDto productDto){
-
         model.addAttribute("productDto",productDto);
         return "index";
     }
@@ -57,7 +56,6 @@ public class LandingPageController {
     public String productPage(Model model,@PathVariable String id) throws ProductException {
         log.info("The id* received is -->{}",id);
         productDtoList= productServices.findProductsByDescription(id);
-
         model.addAttribute("productDto",new ProductDto());
         return "redirect:/product";
     }
@@ -106,10 +104,7 @@ public class LandingPageController {
         product.setProductQuantity(productQuantity);
         product.setDescription(description);
         product.setPrice(price);
-
         cartServices.deleteFromCart(product, phoneNumbers);
-
-
         return "redirect:/";
     }
     @DeleteMapping("/deleteProduct/{id}")
@@ -125,8 +120,6 @@ public class LandingPageController {
      ProductDto productDto = new ProductDto();
         try{
           productDto =productServices.findProductById(id);
-
-
       }  catch (ProductException productException){
           System.err.println(productException.getMessage());
       }
@@ -152,7 +145,6 @@ public class LandingPageController {
         model.addAttribute("productList",productList);
         model.addAttribute("phoneNumber",productDto.getPhoneNumber());
         model.addAttribute("productDto",productDto);
-
         return "cart";
     }
 
