@@ -21,8 +21,6 @@ public class CartItem {
     private Product product;
     private int quantity = 1;
     private BigDecimal total;
-
-
     @NonNull
     private BigDecimal calculateCartItemPrice() {
         return product.getPrice().multiply(BigDecimal.valueOf(this.quantity));
