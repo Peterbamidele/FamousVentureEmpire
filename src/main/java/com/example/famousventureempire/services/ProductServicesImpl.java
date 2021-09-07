@@ -96,7 +96,6 @@ public class ProductServicesImpl implements ProductServices {
     @Override
     public List<Product> findProductsByDescription(String name) throws ProductException {
         List<Product> products=productRepository.findProductsByDescription(name);
-
         return products;
     }
 }
