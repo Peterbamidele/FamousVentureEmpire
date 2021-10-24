@@ -34,9 +34,6 @@ public class ProductServicesImpl implements ProductServices {
         productRepository.deleteById(productsId);
 
     }
-    private String extractFileName(String fileName){
-        return fileName.split("\\.")[0];
-    }
 
     @Override
     public void addProduct(ProductDto productDto) throws ProductException {
@@ -95,7 +92,7 @@ public class ProductServicesImpl implements ProductServices {
     }
 
     @Override
-    public List<Product> findProductsByDescription(String name) throws ProductException {
+    public List<Product> findProductsByDescription(String name) {
         List<Product> products=productRepository.findProductsByDescription(name);
         return products;
     }
